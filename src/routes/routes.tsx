@@ -1,7 +1,11 @@
 import { createRoute } from "@tanstack/react-router";
 import { RootRoute } from "./__root";
-import HomePage from "../pages/HomePage";
+import SettingPage from "../pages/SettingPage";
 import SecondPage from "@/pages/SecondPage";
+import ThirdPage from "@/pages/ThirdPage";
+import LoginPage from "@/pages/LoginPage";
+import DashboardPage from "@/pages/DashboardPage";
+import FourthPage from "@/pages/FourthPage";
 
 // TODO: Steps to add a new route:
 // 1. Create a new page component in the '../pages/' directory (e.g., NewPage.tsx)
@@ -22,10 +26,16 @@ import SecondPage from "@/pages/SecondPage";
 // 4. Add to routeTree: RootRoute.addChildren([HomeRoute, NewRoute, ...])
 // 5. Add Link: <Link to="/new">New Page</Link>
 
-export const HomeRoute = createRoute({
+export const LoginRoute = createRoute({
   getParentRoute: () => RootRoute,
   path: "/",
-  component: HomePage,
+  component: LoginPage,
+});
+
+export const HomeRoute = createRoute({
+  getParentRoute: () => RootRoute,
+  path: "/settings",
+  component: SettingPage,
 });
 
 export const SecondPageRoute = createRoute({
@@ -34,4 +44,29 @@ export const SecondPageRoute = createRoute({
   component: SecondPage,
 });
 
-export const rootTree = RootRoute.addChildren([HomeRoute, SecondPageRoute]);
+export const ThirdPageRoute = createRoute({
+  getParentRoute: () => RootRoute,
+  path: "/third-page",
+  component: ThirdPage,
+});
+
+export const FourthPageRoute = createRoute({
+  getParentRoute: () => RootRoute,
+  path: "/fourth-page",
+  component: FourthPage,
+});
+
+export const DashboardRoute = createRoute({
+  getParentRoute: () => RootRoute,
+  path: "/dashboard",
+  component: DashboardPage,
+});
+
+export const rootTree = RootRoute.addChildren([
+  LoginRoute,
+  HomeRoute,
+  SecondPageRoute,
+  ThirdPageRoute,
+  FourthPageRoute,
+  DashboardRoute,
+]);
