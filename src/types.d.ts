@@ -15,7 +15,7 @@ declare global {
 }
 
 // Preload types
-declare module "global" {
+declare global {
   interface ThemeModeContext {
     getThemeMode: () => Promise<"light" | "dark" | "system">;
     setThemeMode: (mode: "light" | "dark" | "system") => Promise<void>;
@@ -34,15 +34,6 @@ declare module "global" {
     setSize: (width: number, height: number) => Promise<{ width: number; height: number }>;
   }
 
-  interface Window {
-    theme: ThemeModeContext;
-    sidebar: SidebarContext;
-    electronWindow: ElectronWindowContext;
-  }
-}
-
-// Extend the global Window interface
-declare global {
   interface Window {
     theme: ThemeModeContext;
     sidebar: SidebarContext;

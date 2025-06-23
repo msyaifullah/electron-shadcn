@@ -8,6 +8,7 @@ import { router } from "./routes/router";
 import { RouterProvider } from "@tanstack/react-router";
 import { SidebarContextProvider } from "./contexts/sidebar-context";
 import { AuthProvider } from "./contexts/auth-context";
+import { Spinner } from "@/components/ui/minimal-tiptap/components/spinner";
 
 export default function App() {
   const { i18n } = useTranslation();
@@ -20,7 +21,7 @@ export default function App() {
   return (
     <AuthProvider>
       <SidebarContextProvider>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'100vh'}}><Spinner className="w-8 h-8 text-gray-400" /></div>}>
           <RouterProvider router={router} />
         </Suspense>
       </SidebarContextProvider>

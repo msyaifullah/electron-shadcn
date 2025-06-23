@@ -1,10 +1,11 @@
-import { app, BrowserWindow, Tray, Menu, nativeImage, session } from "electron";
+import { app, BrowserWindow, Tray, Menu, nativeImage } from "electron";
 import registerListeners from "./helpers/ipc/listeners-register";
 // "electron-squirrel-startup" seems broken when packaging with vite
 //import started from "electron-squirrel-startup";
 import path from "path";
 import fs from "fs";
-import { execSync } from "child_process";
+
+import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
 
 const inDevelopment = process.env.NODE_ENV === "development";
 let tray: Tray | null = null;
@@ -87,7 +88,7 @@ function setupTrayMenu() {
 
   // Right click shows context menu
   tray.on('right-click', () => {
-    tray.popUpContextMenu(contextMenu);
+    tray?.popUpContextMenu(contextMenu);
   });
 }
 
@@ -126,60 +127,6 @@ function createWindow() {
   }
 }
 
-async function installExtensions() {
-  if (!inDevelopment) return;
-
-  try {
-    const extensionsDir = path.join(app.getPath('userData'), 'extensions');
-    const extensionPath = path.join(extensionsDir, 'react-devtools');
-
-    // Create extensions directory if it doesn't exist
-    if (!fs.existsSync(extensionsDir)) {
-      fs.mkdirSync(extensionsDir, { recursive: true });
-    }
-
-    // Check if extension is already installed
-    const extensions = await session.defaultSession.extensions.getAllExtensions();
-    if (extensions.some(ext => ext.name === 'React Developer Tools')) {
-      console.log('React Developer Tools already installed');
-      return;
-    }
-
-    // Install React DevTools extension if not already present
-    if (!fs.existsSync(extensionPath)) {
-      console.log('Installing React Developer Tools...');
-      
-      // Create a temporary directory for the installation
-      const tempDir = path.join(app.getPath('temp'), 'react-devtools-install');
-      if (!fs.existsSync(tempDir)) {
-        fs.mkdirSync(tempDir, { recursive: true });
-      }
-
-      try {
-        // Install react-devtools package
-        execSync('npm install react-devtools', { cwd: tempDir });
-        
-        // Copy the extension from node_modules to our extensions directory
-        const sourcePath = path.join(tempDir, 'node_modules', 'react-devtools', 'shells', 'chrome', 'extension');
-        if (fs.existsSync(sourcePath)) {
-          fs.cpSync(sourcePath, extensionPath, { recursive: true });
-          console.log('React Developer Tools copied successfully');
-        } else {
-          throw new Error('Could not find React DevTools extension in node_modules');
-        }
-      } finally {
-        // Clean up temporary directory
-        fs.rmSync(tempDir, { recursive: true, force: true });
-      }
-    }
-
-    // Load the extension
-    const extension = await session.defaultSession.extensions.loadExtension(extensionPath);
-    console.log(`Extensions installed successfully: ${extension.name}`);
-  } catch (error) {
-    console.error("Failed to install extensions:", error);
-  }
-}
 
 app.whenReady().then(() => {
   createWindow();
@@ -205,3 +152,13 @@ app.on("activate", () => {
   }
 });
 //osX only ends
+
+async function installExtensions() {
+  try {
+    const result = await installExtension(REACT_DEVELOPER_TOOLS);
+    console.log(`Extensions installed successfully: ${result}`);
+  } catch {
+    console.error("Failed to install extensions");
+  }
+}
+

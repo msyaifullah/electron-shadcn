@@ -1,11 +1,13 @@
+import React from "react";
 import { createRoute } from "@tanstack/react-router";
 import { RootRoute } from "./__root";
-import SettingPage from "../pages/SettingPage";
-import SecondPage from "@/pages/SecondPage";
-import ThirdPage from "@/pages/ThirdPage";
-import LoginPage from "@/pages/LoginPage";
-import DashboardPage from "@/pages/DashboardPage";
-import FourthPage from "@/pages/FourthPage";
+
+const SettingPage = React.lazy(() => import("../pages/SettingPage"));
+const SecondPage = React.lazy(() => import("@/pages/SecondPage"));
+const ThirdPage = React.lazy(() => import("@/pages/ThirdPage"));
+const LoginPage = React.lazy(() => import("@/pages/LoginPage"));
+const DashboardPage = React.lazy(() => import("@/pages/DashboardPage"));
+const FourthPage = React.lazy(() => import("@/pages/FourthPage"));
 
 // TODO: Steps to add a new route:
 // 1. Create a new page component in the '../pages/' directory (e.g., NewPage.tsx)
