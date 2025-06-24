@@ -7,3 +7,11 @@ export async function maximizeWindow() {
 export async function closeWindow() {
   await window.electronWindow.close();
 }
+
+export async function getWindowSize() {
+  return await window.electronWindow.getSize();
+}
+
+export async function setWindowSize(width: number, height: number) {
+  return await window.electronWindow.setSize(width, height);
+}

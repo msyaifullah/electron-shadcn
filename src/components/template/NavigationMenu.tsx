@@ -18,7 +18,7 @@ export default function NavigationMenu() {
         <NavigationMenuItem>
           <Link to="/">
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              {t("titleHomePage")}
+            Login
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
@@ -26,6 +26,21 @@ export default function NavigationMenu() {
           <Link to="/second-page">
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               {t("titleSecondPage")}
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link to="/settings">
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              
+              {t("titleHomePage")}
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link to="/dashboard">
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Dashboard
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
