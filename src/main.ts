@@ -5,7 +5,11 @@ import registerListeners from "./helpers/ipc/listeners-register";
 import path from "path";
 import fs from "fs";
 
-import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
+// import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
+     // Old:
+     // import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
+     // New:
+import { installExtension, REACT_DEVELOPER_TOOLS } from "@tomjs/electron-devtools-installer";
 
 const inDevelopment = process.env.NODE_ENV === "development";
 let tray: Tray | null = null;
